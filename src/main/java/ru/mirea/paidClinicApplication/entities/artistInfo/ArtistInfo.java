@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.mirea.paidClinicApplication.entities.appUser.AppUser;
 import ru.mirea.paidClinicApplication.entities.procedure.Procedure;
-import ru.mirea.paidClinicApplication.entities.record.Record;
 
 import javax.persistence.*;
 
