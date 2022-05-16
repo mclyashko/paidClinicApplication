@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import ru.mirea.paidClinicApplication.entities.appUser.AppUser;
 import ru.mirea.paidClinicApplication.entities.procedure.Procedure;
 
@@ -27,6 +28,7 @@ public class Record {
     private String verdict;
 
     @Column(nullable = false)
+    @DateTimeFormat(pattern="yyyy.MM.dd HH:mm:ss")
     private LocalDateTime dateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)

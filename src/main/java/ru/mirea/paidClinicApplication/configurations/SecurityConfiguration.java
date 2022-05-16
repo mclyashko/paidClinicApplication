@@ -31,17 +31,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().disable()
                 .authorizeRequests()
-                .antMatchers("/login", "/logout", "/registration")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and().formLogin()
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/main")
-                .and().rememberMe()
-                .tokenValiditySeconds((int) TimeUnit.MINUTES.toSeconds(5))
-                .and().userDetailsService(userDetailsService)
-                .sessionManagement();
+                    .antMatchers("/login", "/logout", "/registration")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
+                .and()
+                    .formLogin()
+                    .loginPage("/login")
+                    .loginProcessingUrl("/login")
+                    .defaultSuccessUrl("/home")
+                .and()
+                    .rememberMe()
+                    .tokenValiditySeconds((int) TimeUnit.MINUTES.toSeconds(5))
+                .and()
+                    .userDetailsService(userDetailsService)
+                    .sessionManagement();
     }
 
     @Bean

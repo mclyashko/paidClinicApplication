@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import ru.mirea.paidClinicApplication.entities.artistInfo.ArtistInfo;
 import ru.mirea.paidClinicApplication.entities.record.Record;
 
@@ -41,6 +42,7 @@ public class AppUser {
     private AppUserGender gender;
 
     @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
 
     @Column(nullable = false, unique = true)

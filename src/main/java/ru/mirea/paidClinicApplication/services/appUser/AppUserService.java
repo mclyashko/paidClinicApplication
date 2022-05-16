@@ -5,28 +5,39 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import ru.mirea.paidClinicApplication.entities.appUser.AppUser;
+import ru.mirea.paidClinicApplication.entities.appUser.AppUserRole;
 import ru.mirea.paidClinicApplication.repositories.appUser.AppUserRepository;
 
 import java.util.Optional;
 
-@SuppressWarnings({"ClassCanBeRecord", "unused"})
+@SuppressWarnings({"unused"})
+@Service
 public class AppUserService {
 
     private final AppUserRepository appUserRepository;
 
     private final PasswordEncoder passwordEncoder;
 
-    @SuppressWarnings("SpringJavaAutowiredMembersInspection")
     @Autowired
     public AppUserService(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder) {
         this.appUserRepository = appUserRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public AppUser save(AppUser appUser) {
+    public String save(AppUser appUser) {
+        boolean isUserAlreadyExists = (appUserRepository.findByEmail(appUser.getEmail()).isPresent() ||
+                appUserRepository.findByPhoneNumber(appUser.getPhoneNumber()).isPresent()
+        );
+
+        if (isUserAlreadyExists) {
+            return "user_already_exists";
+        }
+
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
-        return appUserRepository.save(appUser);
+        appUser.setAppUserRole(AppUserRole.PATIENT);
+        return "login";
     }
 
     public AppUser findByUsername(String email) {
