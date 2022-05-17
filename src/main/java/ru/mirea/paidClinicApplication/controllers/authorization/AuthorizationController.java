@@ -32,4 +32,9 @@ public class AuthorizationController {
     public String registerUser(@ModelAttribute("user") AppUser user) {
         return appUserService.save(user);
     }
+
+    @GetMapping("/authentication_failure")
+    public String getAuthenticationFailurePage() {
+        return "authentication_failure";
+    }
 }

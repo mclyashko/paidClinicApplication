@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.mirea.paidClinicApplication.handlers.authorization.CustomAuthenticationFailureHandler;
 import ru.mirea.paidClinicApplication.services.appUser.UserDetailsServiceImpl;
 
 import java.util.concurrent.TimeUnit;
@@ -19,10 +20,12 @@ import java.util.concurrent.TimeUnit;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final UserDetailsServiceImpl userDetailsService;
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Autowired
-    public SecurityConfiguration(UserDetailsServiceImpl appUserService) {
+    public SecurityConfiguration(UserDetailsServiceImpl appUserService, CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
         this.userDetailsService = appUserService;
+        this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().disable()
                 .authorizeRequests()
-                    .antMatchers("/login", "/logout", "/registration")
+                    .antMatchers("/login", "/logout", "/registration", "/authentication_failure", "/user_already_exists")
                     .permitAll()
                     .anyRequest()
                     .authenticated()
@@ -39,6 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .formLogin()
                     .loginPage("/login")
                     .loginProcessingUrl("/login")
+                    .failureHandler(customAuthenticationFailureHandler)
                     .defaultSuccessUrl("/home")
                 .and()
                     .rememberMe()

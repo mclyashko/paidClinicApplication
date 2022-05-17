@@ -23,8 +23,8 @@ public class ArtistInfo {
     @Column(nullable = false, unique = true)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private Long artistId; // to AppUser !!!
+//    @Column(nullable = false, unique = true)
+//    private Long artistId; // to AppUser !!!
 
     @Column(nullable = false, unique = true)
     private Long cabinet;
