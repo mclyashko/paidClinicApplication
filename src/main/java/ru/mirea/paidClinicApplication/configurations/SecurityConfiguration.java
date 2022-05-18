@@ -40,7 +40,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().disable()
                 .authorizeRequests()
-                    .antMatchers("/login", "/logout", "/registration", "/authentication_failure", "/user_already_exists")
+                    .antMatchers("/login", "/logout", "/registration",
+                            "/authentication_failure", "/user_already_exists",
+                            "/favicon.ico"
+                    )
                     .permitAll()
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     .antMatchers("/home_doctor").hasRole(AppUserRole.DOCTOR.name())
@@ -54,6 +57,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .loginProcessingUrl("/login")
                     .failureHandler(customAuthenticationFailureHandler)
                     .successHandler(customAuthenticationSuccessHandler)
+                .and()
+                    .httpBasic()
+                .and()
+                    .logout()
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login")
                 .and()
                     .rememberMe()
                     .tokenValiditySeconds((int) TimeUnit.MINUTES.toSeconds(5))
