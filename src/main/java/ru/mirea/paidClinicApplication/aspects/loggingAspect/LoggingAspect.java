@@ -22,6 +22,6 @@ public class LoggingAspect {
                 ";"
         );
     }
-    @Pointcut("within(ru.mirea.paidClinicApplication.services.*)")
+    @Pointcut("within(ru.mirea.paidClinicApplication.services..*)")
     public void allServiceMethods() {}
 }

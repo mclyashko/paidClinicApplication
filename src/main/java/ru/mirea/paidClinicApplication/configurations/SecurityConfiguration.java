@@ -23,8 +23,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Autowired
-    public SecurityConfiguration(UserDetailsServiceImpl appUserService, CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
-        this.userDetailsService = appUserService;
+    public SecurityConfiguration(UserDetailsServiceImpl userDetailsService,
+                                 CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
+        this.userDetailsService = userDetailsService;
         this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
     }
 
@@ -36,6 +37,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/login", "/logout", "/registration", "/authentication_failure", "/user_already_exists")
                     .permitAll()
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    .antMatchers("/home").hasRole("DOCTOR")
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     .anyRequest()
                     .authenticated()
                 .and()
@@ -43,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")
                     .loginProcessingUrl("/login")
                     .failureHandler(customAuthenticationFailureHandler)
-                    .defaultSuccessUrl("/home")
+                    //.defaultSuccessUrl("/home")
                 .and()
                     .rememberMe()
                     .tokenValiditySeconds((int) TimeUnit.MINUTES.toSeconds(5))

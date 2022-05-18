@@ -1,6 +1,13 @@
 package ru.mirea.paidClinicApplication.entities.appUser;
 
-public enum AppUserRole {
-    @SuppressWarnings("unused") DOCTOR,
-    @SuppressWarnings("unused") PATIENT
+import org.springframework.security.core.GrantedAuthority;
+
+public enum AppUserRole implements GrantedAuthority {
+    DOCTOR,
+    PATIENT;
+
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }
