@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.mirea.paidClinicApplication.entities.appUser.AppUserRole;
+import ru.mirea.paidClinicApplication.handlers.authentication.CustomAuthenticationSuccessHandler;
 import ru.mirea.paidClinicApplication.handlers.authorization.CustomAuthenticationFailureHandler;
 import ru.mirea.paidClinicApplication.services.appUser.UserDetailsServiceImpl;
 
@@ -21,12 +23,15 @@ import java.util.concurrent.TimeUnit;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final UserDetailsServiceImpl userDetailsService;
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Autowired
     public SecurityConfiguration(UserDetailsServiceImpl userDetailsService,
-                                 CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
+                                 CustomAuthenticationFailureHandler customAuthenticationFailureHandler,
+                                 CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
         this.userDetailsService = userDetailsService;
         this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
+        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
     }
 
     @Override
@@ -38,7 +43,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("/login", "/logout", "/registration", "/authentication_failure", "/user_already_exists")
                     .permitAll()
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    .antMatchers("/home").hasRole("DOCTOR")
+                    .antMatchers("/home_doctor").hasRole(AppUserRole.DOCTOR.name())
+                    .antMatchers("/home_patient").hasRole(AppUserRole.PATIENT.name())
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     .anyRequest()
                     .authenticated()
@@ -47,7 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")
                     .loginProcessingUrl("/login")
                     .failureHandler(customAuthenticationFailureHandler)
-                    //.defaultSuccessUrl("/home")
+                    .successHandler(customAuthenticationSuccessHandler)
                 .and()
                     .rememberMe()
                     .tokenValiditySeconds((int) TimeUnit.MINUTES.toSeconds(5))
