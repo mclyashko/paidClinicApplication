@@ -22,6 +22,7 @@ public class LoggingAspect {
                 ";"
         );
     }
+    @SuppressWarnings({"unused", "EmptyMethod"})
     @Pointcut("within(ru.mirea.paidClinicApplication.services..*)")
     public void allServiceMethods() {}
 }

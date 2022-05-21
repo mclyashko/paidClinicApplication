@@ -37,8 +37,6 @@ public class Record {
     @JsonIgnore
     private AppUser client;
 
-    //@OneToOne(fetch = FetchType.LAZY, mappedBy = "record")
-    //private Procedure procedure;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "procedure_id", insertable = false, updatable = false)
     @JsonIgnore

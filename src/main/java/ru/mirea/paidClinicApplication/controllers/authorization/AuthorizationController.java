@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.mirea.paidClinicApplication.entities.appUser.AppUser;
 import ru.mirea.paidClinicApplication.services.appUser.AppUserService;
 
+@SuppressWarnings("SameReturnValue")
 @Controller
 public class AuthorizationController {
 

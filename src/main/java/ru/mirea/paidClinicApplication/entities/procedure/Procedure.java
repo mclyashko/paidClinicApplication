@@ -9,7 +9,6 @@ import ru.mirea.paidClinicApplication.entities.artistInfo.ArtistInfo;
 import ru.mirea.paidClinicApplication.entities.record.Record;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -32,10 +31,6 @@ public class Procedure {
     @Column(nullable = false)
     private double cost;
 
-    /*@OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "record_id", insertable = false, updatable = false)
-    @JsonIgnore
-    private Record record;*/
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "procedure")
     @JsonIgnore
     private List<Record> recordList;

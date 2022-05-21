@@ -6,6 +6,7 @@ import ru.mirea.paidClinicApplication.entities.record.Record;
 import ru.mirea.paidClinicApplication.repositories.record.RecordRepository;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,9 +24,25 @@ public class RecordService {
         recordRepository.updateRecordVerdictById(verdict, id);
     }
 
-    public List<Record> getRecordsWithNotNoneVerdictByDoctorId(Long id) {
+    public List<Record> getRecordsSortedByDateWithNotNoneVerdictByDoctorId(Long id) {
         return recordRepository.findAllByProcedure_ArtistInfo_Artist_id(
                 id
-        ).stream().filter(e -> e.getVerdict().equals("None")).collect(Collectors.toList());
+                ).stream().filter(e -> e.getVerdict().equals("None")).
+                sorted(new RecordComparator()).collect(Collectors.toList());
+    }
+
+    public List<Record> getRecordsSortedByDateWithNotNoneVerdictByDoctorIdAndPatientEmail(Long id, String email) {
+        return recordRepository.findAllByProcedure_ArtistInfo_Artist_idAndClient_Email(
+                        id, email
+                ).stream().filter(e -> e.getVerdict().equals("None")).
+                sorted(new RecordComparator()).collect(Collectors.toList());
+    }
+}
+
+final class RecordComparator implements Comparator<Record> {
+
+    @Override
+    public int compare(Record o1, Record o2) {
+        return o1.getDateTime().compareTo(o2.getDateTime());
     }
 }
