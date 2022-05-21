@@ -22,6 +22,7 @@ public class Record {
     @SequenceGenerator(name = "record_sequence", sequenceName = "record_sequence", allocationSize = 1)
     @GeneratedValue(generator = "record_sequence", strategy = GenerationType.SEQUENCE)
     @Column(nullable = false, unique = true)
+    @JsonIgnore
     private Long id;
 
     @Column(nullable = false)
@@ -36,6 +37,21 @@ public class Record {
     @JsonIgnore
     private AppUser client;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "record")
+    //@OneToOne(fetch = FetchType.LAZY, mappedBy = "record")
+    //private Procedure procedure;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "procedure_id", insertable = false, updatable = false)
+    @JsonIgnore
     private Procedure procedure;
+
+    @Override
+    public String toString() {
+        return "Record{" +
+                "id=" + id +
+                ", verdict='" + verdict + '\'' +
+                ", dateTime=" + dateTime +
+                ", client=" + client +
+                ", procedure=" + procedure +
+                '}';
+    }
 }

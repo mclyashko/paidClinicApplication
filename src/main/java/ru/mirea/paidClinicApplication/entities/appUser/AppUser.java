@@ -26,6 +26,7 @@ public class AppUser {
     @SequenceGenerator(name = "app_users_sequence", sequenceName = "app_users_sequence", allocationSize = 1)
     @GeneratedValue(generator = "app_users_sequence", strategy = GenerationType.SEQUENCE)
     @Column(nullable = false, unique = true)
+    @JsonIgnore
     private Long id;
 
     @Column(nullable = false)
@@ -55,12 +56,15 @@ public class AppUser {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     private AppUserRole appUserRole;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
+    @JsonIgnore
     private List<Record> records = new ArrayList<>();
 
     @SuppressWarnings("JpaDataSourceORMInspection")
@@ -68,4 +72,18 @@ public class AppUser {
     @JoinColumn(name = "artist_info_id", insertable = false, updatable = false)
     @JsonIgnore
     private ArtistInfo artistInfo;
+
+    @Override
+    public String toString() {
+        return "AppUser{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", gender=" + gender +
+                ", dateOfBirth=" + dateOfBirth +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

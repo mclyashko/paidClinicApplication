@@ -15,7 +15,28 @@
 
     <!-- Style -->
 
-    <style type="text/css"></style>
+    <style type="text/css">
+        .navbar{
+            padding: 15px;
+        }
+        .wrapper{
+            position: relative;
+            appearance: none;
+            color: white;
+            /*cursor: pointer;*/
+            outline: none;
+            border-radius: 25px;
+            border: 15px solid transparent;
+            background: linear-gradient(#000, #007) padding-box, radial-gradient(#00C9A7, #845EC2) border-box;
+
+            padding: 1vmax;
+            height: fit-content;
+        }
+        .elem {
+            border: 5px solid transparent;
+            border-radius: 15px;
+        }
+    </style>
 
     <!-- Favicon -->
 
@@ -28,6 +49,98 @@
     <title>Платная поликлиника ParaMedic</title>
 </head>
 <body>
-    YOU ARE A DOCTOR
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/home_doctor">ParaMedic</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Выйти</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="wrapper">
+        <div th:inline="text">
+            <h1>Добрый день, [[${me.getName()}]]!</h1>
+        </div>
+        <div>
+            <h2>Список записей:</h2>
+        </div>
+        <table class="container table-bright table-bordered">
+            <tr th:if="${records.isEmpty()}">
+                <td colspan="2"> Нет записей </td>
+            </tr>
+            <thead th:if="${not records.isEmpty()}">
+                <tr>
+                    <th>ID и время записи</th>
+                    <th>Пол и дата рождения</th>
+                    <th>ФИО пациента</th>
+                    <th>Контактные данные пациента</th>
+                    <th>Информация о записи</th>
+                    <th>Добавить результаты</th>
+                </tr>
+            </thead>
+            <tbody th:if="${not records.isEmpty()}">
+                <tr th:each="record : ${records}">
+                    <div class="row" style="display: inline-block;">
+                        <td class="col">
+                            <div style="display: flex; flex-direction: column" th:inline="text">
+                                <span>ID: [[${record.getId()}]]</span>
+                                <span>Время записи: [[${#temporals.format(record.getDateTime(), 'HH:mm:ss dd-MMM-yyyy')}]]</span>
+                            </div>
+                        </td>
+                        <td class="col">
+                            <div style="display: flex; flex-direction: column" th:inline="text">
+                                <span>Пол: [[${record.getClient().getGender()}]]</span>
+                                <span>Дата рождения: [[${#dates.format(record.getClient().getDateOfBirth(), 'dd-MMM-yyyy')}]]</span>
+                            </div>
+                        </td>
+                        <td class="col">
+                            <div style="display: flex; flex-direction: column" th:inline="text">
+                                <span>Фамилия: [[${record.getClient().getSurname()}]]</span>
+                                <span>Имя: [[${record.getClient().getName()}]]</span>
+                                <span>Отчество: [[${record.getClient().getPatronymic()}]]</span>
+                            </div>
+                        </td>
+                        <td class="col">
+                            <div style="display: flex; flex-direction: column" th:inline="text">
+                                <span>Телефон: [[${record.getClient().getPhoneNumber()}]]</span>
+                                <span>E-mail: [[${record.getClient().getEmail()}]]</span>
+                            </div>
+                        </td>
+                        <td class="col">
+                            <div style="display: flex; flex-direction: column" th:inline="text">
+                                <span>Услуга: [[${record.getProcedure().getDescription()}]]</span>
+                                <span>Стоимость: [[${record.getProcedure().getCost()}]]</span>
+                            </div>
+                        </td>
+                        <td class="col">
+                            <div style="display: flex; flex-direction: column; margin: 5px; padding: 5px;" th:inline="text">
+                                <span>Вердикт по записи с ID [[${record.getId()}]]</span>
+                                <form th:action="@{/record_data}" th:object="${recordData}" method="post">
+                                    <input type="hidden" th:value="${record.getId()}" name="id">
+                                    <input type="text" id="verdict" name="verdict" class="form-control" placeholder="Вердикт">
+                                    <button type="submit" class="btn btn-secondary btn-block" style="width: 100%;">
+                                        Добавить
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- JavaScript Bundle with Popper -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

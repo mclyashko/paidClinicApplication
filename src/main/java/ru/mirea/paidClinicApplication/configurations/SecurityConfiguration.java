@@ -47,6 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     .antMatchers("/home_doctor").hasRole(AppUserRole.DOCTOR.name())
+                    .antMatchers("/record_data").hasRole(AppUserRole.DOCTOR.name())
                     .antMatchers("/home_patient").hasRole(AppUserRole.PATIENT.name())
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     .anyRequest()

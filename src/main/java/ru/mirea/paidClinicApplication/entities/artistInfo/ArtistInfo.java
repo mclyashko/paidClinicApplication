@@ -21,6 +21,7 @@ public class ArtistInfo {
     @SequenceGenerator(name = "artist_info_sequence", sequenceName = "artist_info_sequence", allocationSize = 1)
     @GeneratedValue(generator = "artist_info_sequence", strategy = GenerationType.SEQUENCE)
     @Column(nullable = false, unique = true)
+    @JsonIgnore
     private Long id;
 
 //    @Column(nullable = false, unique = true)
@@ -35,5 +36,6 @@ public class ArtistInfo {
     private Procedure procedure;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "artistInfo")
+    @JsonIgnore
     private AppUser artist;
 }
