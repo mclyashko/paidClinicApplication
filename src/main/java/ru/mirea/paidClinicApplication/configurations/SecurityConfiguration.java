@@ -50,6 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("/record_data").hasRole(AppUserRole.DOCTOR.name())
                     .antMatchers("/filterByEmail").hasRole(AppUserRole.DOCTOR.name())
                     .antMatchers("/home_patient").hasRole(AppUserRole.PATIENT.name())
+                    .antMatchers("/cancel_entry").hasRole(AppUserRole.PATIENT.name())
                     .antMatchers("/filterByProcedureDescription").hasRole(AppUserRole.PATIENT.name())
                     .antMatchers("/contact_details").hasRole(AppUserRole.PATIENT.name())
                     .antMatchers("/list_of_services").hasRole(AppUserRole.PATIENT.name())

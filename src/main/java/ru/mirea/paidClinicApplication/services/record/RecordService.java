@@ -52,6 +52,10 @@ public class RecordService {
                         contains(description.toUpperCase())).
                 sorted(new RecordComparator()).collect(Collectors.toList());
     }
+
+    public void deleteRecordById(Long id){
+        recordRepository.deleteById(id);
+    }
 }
 
 final class RecordComparator implements Comparator<Record> {

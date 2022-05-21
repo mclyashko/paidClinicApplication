@@ -94,6 +94,7 @@
                     <th>Контактные данные пациента</th>
                     <th>Информация о записи</th>
                     <th>Вердикт</th>
+                    <th>Отменить запись</th>
                 </tr>
             </thead>
             <tbody th:if="${not records.isEmpty()}">
@@ -133,6 +134,17 @@
                         <td class="col">
                             <div style="display: flex; flex-direction: column" th:inline="text">
                                 <span>Вердикт: [[${record.getVerdict()}]]</span>
+                            </div>
+                        </td>
+                        <td class="col">
+                            <div th:if="${#strings.equals(record.getVerdict(), 'None')}" style="display: flex; flex-direction: column; margin: 5px; padding: 5px;" th:inline="text">
+                                <span>Отмена записи с ID [[${record.getId()}]]</span>
+                                <form th:action="@{/cancel_entry}" th:object="${deleteRecordInfo}" method="post">
+                                    <input type="hidden" th:value="${record.getId()}" name="id">
+                                    <button type="submit" class="btn btn-secondary btn-block" style="width: 100%;">
+                                        Отменить
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </div>
