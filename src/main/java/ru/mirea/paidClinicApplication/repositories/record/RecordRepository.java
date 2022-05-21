@@ -12,6 +12,8 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
 
     List<Record> findAllByProcedure_ArtistInfo_Artist_idAndClient_Email(Long artistId, String email);
 
+    List<Record> findAllByClient_Id(Long clientId);
+
     @Modifying
     @Query("update Record r set r.verdict = ?1 where r.id = ?2")
     void updateRecordVerdictById(String verdict, Long recordId);

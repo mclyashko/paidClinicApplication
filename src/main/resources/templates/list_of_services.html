@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+
+    <!-- Style -->
+
+    <style type="text/css">
+        .navbar{
+            padding: 15px;
+        }
+        .wrapper{
+            position: relative;
+            appearance: none;
+            color: white;
+            /*cursor: pointer;*/
+            outline: none;
+            border-radius: 25px;
+            border: 15px solid transparent;
+            background: linear-gradient(#000, #007) padding-box, radial-gradient(#00C9A7, #845EC2) border-box;
+
+            padding: 1vmax;
+            height: fit-content;
+        }
+        .elem {
+            border: 5px solid transparent;
+            border-radius: 15px;
+        }
+    </style>
+
+    <!-- Favicon -->
+
+    <link rel="icon" type="image/ico" th:href="@{../public/favicon.ico}">
+
+    <!-- CSS only -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Платная поликлиника ParaMedic</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/home_patient">ParaMedic</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/list_of_services">Услуги</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact_details">Контактные данные</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Выйти</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    LIST
+</body>
+</html>

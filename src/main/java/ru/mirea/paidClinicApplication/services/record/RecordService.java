@@ -8,6 +8,7 @@ import ru.mirea.paidClinicApplication.repositories.record.RecordRepository;
 import javax.transaction.Transactional;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +36,20 @@ public class RecordService {
         return recordRepository.findAllByProcedure_ArtistInfo_Artist_idAndClient_Email(
                         id, email
                 ).stream().filter(e -> e.getVerdict().equals("None")).
+                sorted(new RecordComparator()).collect(Collectors.toList());
+    }
+
+    public List<Record> getAllRecordsSortedByDateByPatientId(Long id) {
+        return recordRepository.findAllByClient_Id(
+                id
+        ).stream().sorted(new RecordComparator()).collect(Collectors.toList());
+    }
+
+    public List<Record> getAllRecordsSortedByDateByPatientIdFilteredByProcedureDescription(Long id, String description){
+        return recordRepository.findAllByClient_Id(
+                id
+        ).stream().filter(e -> e.getProcedure().getDescription().toUpperCase(Locale.ROOT).
+                        contains(description.toUpperCase())).
                 sorted(new RecordComparator()).collect(Collectors.toList());
     }
 }

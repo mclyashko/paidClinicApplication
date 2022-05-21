@@ -48,7 +48,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     .antMatchers("/home_doctor").hasRole(AppUserRole.DOCTOR.name())
                     .antMatchers("/record_data").hasRole(AppUserRole.DOCTOR.name())
+                    .antMatchers("/filterByEmail").hasRole(AppUserRole.DOCTOR.name())
                     .antMatchers("/home_patient").hasRole(AppUserRole.PATIENT.name())
+                    .antMatchers("/filterByProcedureDescription").hasRole(AppUserRole.PATIENT.name())
+                    .antMatchers("/contact_details").hasRole(AppUserRole.PATIENT.name())
+                    .antMatchers("/list_of_services").hasRole(AppUserRole.PATIENT.name())
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     .anyRequest()
                     .authenticated()
