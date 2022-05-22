@@ -59,7 +59,7 @@ public class HomePatientController {
 
     @PostMapping("filterByProcedureDescription")
     @Secured(AppUserRole.PatientFinalStr)
-    public String filterRecordsByEmail(@RequestParam String procedureDescription, Model model) {
+    public String filterByProcedureDescription(@RequestParam String procedureDescription, Model model) {
         AppUser appUser = appUserService.getCurrentUser();
 
         List<Record> recordsWithAppUserIdSortedByDateFilteredByProcedureDescription;
