@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ru.mirea.paidClinicApplication.annotations.mailProc.SendMailProc;
+import ru.mirea.paidClinicApplication.annotations.mailReg.SendMailReg;
 import ru.mirea.paidClinicApplication.entities.appUser.AppUser;
 import ru.mirea.paidClinicApplication.entities.appUser.AppUserRole;
 import ru.mirea.paidClinicApplication.entities.procedure.Procedure;
@@ -31,13 +34,15 @@ public class ListOfServicesController {
     private final AppUserService appUserService;
     private final ProcedureService procedureService;
     private final RecordService recordService;
+    private final SendMailHelper sendMailHelper;
 
     @Autowired
     public ListOfServicesController(AppUserService appUserService, ProcedureService procedureService,
-                                    RecordService recordService) {
+                                    RecordService recordService, SendMailHelper sendMailHelper) {
         this.appUserService = appUserService;
         this.procedureService = procedureService;
         this.recordService = recordService;
+        this.sendMailHelper = sendMailHelper;
     }
 
     @GetMapping("/list_of_services")
@@ -62,6 +67,8 @@ public class ListOfServicesController {
         AppUser appUser = appUserService.findById(newAppointmentInfo.getClientId());
         Procedure procedure = procedureService.findById(newAppointmentInfo.getProcedureId());
         LocalDateTime dateTime = newAppointmentInfo.getDateTime();
+
+        sendMailHelper.getAppUserAndProcedureFromMakeAnAppointmentToSendEmail(appUser, procedure);
 
         Record record = new Record();
         record.setClient(appUser);
@@ -129,5 +136,12 @@ final class NewAppointmentInfo {
                 ", procedureId=" + procedureId +
                 ", dateTime=" + dateTime +
                 '}';
+    }
+}
+
+@Component
+class SendMailHelper {
+    @SendMailProc
+    public void getAppUserAndProcedureFromMakeAnAppointmentToSendEmail(AppUser appUser, Procedure procedure){
     }
 }

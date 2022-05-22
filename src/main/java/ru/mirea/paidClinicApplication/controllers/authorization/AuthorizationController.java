@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.mirea.paidClinicApplication.annotations.mailReg.SendMailReg;
 import ru.mirea.paidClinicApplication.entities.appUser.AppUser;
 import ru.mirea.paidClinicApplication.services.appUser.AppUserService;
 
@@ -30,6 +31,7 @@ public class AuthorizationController {
     }
 
     @PostMapping("/registration")
+    @SendMailReg
     public String registerUser(@ModelAttribute("user") AppUser user) {
         return appUserService.save(user);
     }
