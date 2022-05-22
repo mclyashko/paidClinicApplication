@@ -55,6 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("/contact_details").hasRole(AppUserRole.PATIENT.name())
                     .antMatchers("/list_of_services").hasRole(AppUserRole.PATIENT.name())
                     .antMatchers("/fBPD").hasRole(AppUserRole.PATIENT.name())
+                    .antMatchers("/make_an_appointment").hasRole(AppUserRole.PATIENT.name())
                     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     .anyRequest()
                     .authenticated()

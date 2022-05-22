@@ -29,7 +29,8 @@ public class Record {
     private String verdict;
 
     @Column(nullable = false)
-    @DateTimeFormat(pattern="yyyy.MM.dd HH:mm:ss")
+    //@DateTimeFormat(pattern="yyyy.MM.dd HH:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")
     private LocalDateTime dateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)

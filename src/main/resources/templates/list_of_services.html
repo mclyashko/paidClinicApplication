@@ -115,6 +115,19 @@
                                 <span>Кабинет: [[${service.getArtistInfo().getCabinet()}]]</span>
                             </div>
                         </td>
+                        <td class="col">
+                            <div style="display: flex; flex-direction: column; margin: 5px; padding: 5px;" th:inline="text">
+                                <span>Запись на процедуру с ID [[${service.getId()}]]</span>
+                                <form th:action="@{/make_an_appointment}" th:object="${newAppointmentInfo}" method="post">
+                                    <input type="hidden" th:value="${me.getId()}" name="clientId">
+                                    <input type="hidden" th:value="${service.getId()}" name="procedureId">
+                                    <input type="datetime-local" id="dateTime" name="dateTime" class="form-control" placeholder="01-01-2022" min="01-01-2022" max="2025-12-31" required="required">
+                                    <button type="submit" class="btn btn-secondary btn-block" style="width: 100%;">
+                                        Записаться
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
                     </div>
                 </tr>
             </tbody>
