@@ -62,7 +62,7 @@ public class RecordService {
                 findAllByDateTimeGreaterThanEqualAndDateTimeLessThanEqualAndProcedure_ArtistInfo_Artist_id(
                         record.getDateTime().minusMinutes(10),
                         record.getDateTime(),
-                        record.getProcedure().getArtistInfo().getId()
+                        record.getProcedure().getArtistInfo().getArtist().getId()
                 ).isEmpty(); // -10;0
 
         if (!isTheRecordingTimeAvailable) {
