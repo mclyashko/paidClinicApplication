@@ -93,6 +93,7 @@
                     <th>ФИО пациента</th>
                     <th>Контактные данные пациента</th>
                     <th>Информация о записи</th>
+                    <th>Принимающий врач</th>
                     <th>Вердикт</th>
                     <th>Отменить запись</th>
                 </tr>
@@ -129,6 +130,14 @@
                             <div style="display: flex; flex-direction: column" th:inline="text">
                                 <span>Услуга: [[${record.getProcedure().getDescription()}]]</span>
                                 <span>Стоимость: [[${record.getProcedure().getCost()}]]</span>
+                            </div>
+                        </td>
+                        <td class="col">
+                            <div style="display: flex; flex-direction: column" th:inline="text">
+                                <span>Фамилия: [[${record.getProcedure().getArtistInfo().getArtist.getName()}]]</span>
+                                <span>Имя: [[${record.getProcedure().getArtistInfo().getArtist.getSurname()}]]</span>
+                                <span>Отчество: [[${record.getProcedure().getArtistInfo().getArtist.getPatronymic()}]]</span>
+                                <span>Кабинет: [[${record.getProcedure().getArtistInfo().getCabinet()}]]</span>
                             </div>
                         </td>
                         <td class="col">
