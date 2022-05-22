@@ -121,7 +121,7 @@
                                 <form th:action="@{/make_an_appointment}" th:object="${newAppointmentInfo}" method="post">
                                     <input type="hidden" th:value="${me.getId()}" name="clientId">
                                     <input type="hidden" th:value="${service.getId()}" name="procedureId">
-                                    <input type="datetime-local" id="dateTime" name="dateTime" class="form-control" placeholder="01-01-2022" min="01-01-2022" max="2025-12-31" required="required">
+                                    <input type="datetime-local" id="dateTime" name="dateTime" class="form-control" placeholder="01-01-2022" min="01-01-2022" max="01-01-2030" required="required">
                                     <button type="submit" class="btn btn-secondary btn-block" style="width: 100%;">
                                         Записаться
                                     </button>

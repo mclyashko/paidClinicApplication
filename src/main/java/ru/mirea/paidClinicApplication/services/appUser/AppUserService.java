@@ -51,6 +51,10 @@ public class AppUserService {
         return appUser.get();
     }
 
+    public AppUser findById(Long Id) {
+        return appUserRepository.getById(Id);
+    }
+
     public AppUser getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

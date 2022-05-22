@@ -29,17 +29,16 @@ public class Record {
     private String verdict;
 
     @Column(nullable = false)
-    //@DateTimeFormat(pattern="yyyy.MM.dd HH:mm:ss")
     @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")
     private LocalDateTime dateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", insertable = false, updatable = false)
+    @JoinColumn(name = "client_id", updatable = false)
     @JsonIgnore
     private AppUser client;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "procedure_id", insertable = false, updatable = false)
+    @JoinColumn(name = "procedure_id", updatable = false)
     @JsonIgnore
     private Procedure procedure;
 

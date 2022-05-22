@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.mirea.paidClinicApplication.entities.procedure.Procedure;
 import ru.mirea.paidClinicApplication.repositories.procedure.ProcedureRepository;
-import ru.mirea.paidClinicApplication.repositories.record.RecordRepository;
-import ru.mirea.paidClinicApplication.services.record.RecordService;
 
 import java.util.Comparator;
 import java.util.List;
@@ -29,6 +27,10 @@ public class ProcedureService {
         return procedureRepository.findAll().stream().filter(e -> e.getDescription().toUpperCase(Locale.ROOT).
                 contains(procedureDescription.toUpperCase())).
                 sorted(new ProcedureComparator()).collect(Collectors.toList());
+    }
+
+    public Procedure findById(Long Id) {
+        return procedureRepository.getById(Id);
     }
 }
 

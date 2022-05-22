@@ -17,8 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.mirea.paidClinicApplication.entities.appUser.AppUser;
 import ru.mirea.paidClinicApplication.entities.appUser.AppUserRole;
 import ru.mirea.paidClinicApplication.entities.procedure.Procedure;
+import ru.mirea.paidClinicApplication.entities.record.Record;
 import ru.mirea.paidClinicApplication.services.appUser.AppUserService;
 import ru.mirea.paidClinicApplication.services.procedure.ProcedureService;
+import ru.mirea.paidClinicApplication.services.record.RecordService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,11 +30,14 @@ public class ListOfServicesController {
 
     private final AppUserService appUserService;
     private final ProcedureService procedureService;
+    private final RecordService recordService;
 
     @Autowired
-    public ListOfServicesController(AppUserService appUserService, ProcedureService procedureService) {
+    public ListOfServicesController(AppUserService appUserService, ProcedureService procedureService,
+                                    RecordService recordService) {
         this.appUserService = appUserService;
         this.procedureService = procedureService;
+        this.recordService = recordService;
     }
 
     @GetMapping("/list_of_services")
@@ -53,9 +58,17 @@ public class ListOfServicesController {
 
     @PostMapping("/make_an_appointment")
     @Secured(AppUserRole.PatientFinalStr)
-    public ModelAndView makeAnAppointment(@ModelAttribute("newAppointmentInfo") NewAppointmentInfo newAppointmentInfo) {
-        System.out.println(newAppointmentInfo);
-        return new ModelAndView("redirect:/list_of_services"); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public String makeAnAppointment(@ModelAttribute("newAppointmentInfo") NewAppointmentInfo newAppointmentInfo) {
+        AppUser appUser = appUserService.findById(newAppointmentInfo.getClientId());
+        Procedure procedure = procedureService.findById(newAppointmentInfo.getProcedureId());
+        LocalDateTime dateTime = newAppointmentInfo.getDateTime();
+
+        Record record = new Record();
+        record.setClient(appUser);
+        record.setProcedure(procedure);
+        record.setDateTime(dateTime);
+
+        return recordService.save(record);
     }
 
     @PostMapping("fBPD")
@@ -83,6 +96,18 @@ public class ListOfServicesController {
 
         return "list_of_services";
     }
+
+    @GetMapping("/ok_time")
+    @Secured(AppUserRole.PatientFinalStr)
+    public String getOkPage(){
+        return "ok_time";
+    }
+
+    @GetMapping("/wrong_time")
+    @Secured(AppUserRole.PatientFinalStr)
+    public String getWrongPage(){
+        return "wrong_time";
+    }
 }
 
 @Getter
@@ -94,7 +119,6 @@ final class NewAppointmentInfo {
 
     private Long procedureId;
 
-    //@DateTimeFormat(pattern="yyyy.MM.dd HH:mm:ss")
     @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")
     private LocalDateTime dateTime;
 
