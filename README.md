@@ -23,7 +23,7 @@
   - Вынесение вердиктов по итогам посещения
 
 ## Как собрать приложение?
-[image](https://github.com/mclyashko/paidClinicApplication/blob/main/report/some_scr/Отчет/Снимок%20экрана%202022-05-23%20в%2017.30.14.png?raw=true)
+<img width="800" alt="image" src="https://user-images.githubusercontent.com/70536793/169895013-68edf2b2-b0fb-4d7e-861b-69ef604891c6.png">
 
 ## Как запустить приложение?
-[image](https://github.com/mclyashko/paidClinicApplication/blob/main/report/some_scr/Отчет/Снимок%20экрана%202022-05-23%20в%2017.27.07.png?raw=true)
+<img width="1983" alt="image" src="https://user-images.githubusercontent.com/70536793/169895079-b1e7810e-38f8-4976-8603-d31d79f7f492.png">
