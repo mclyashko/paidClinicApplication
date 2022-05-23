@@ -31,7 +31,7 @@ public class EmailAspect {
     public void emailSendReg(JoinPoint joinPoint) {
         AppUser appUser = (AppUser) joinPoint.getArgs()[0];
         emailService.sendNotification(
-                "СПАСИБО ЗА РЕГИСТАРИЦЮ",
+                "СПАСИБО ЗА РЕГИСТРАЦИЮ",
                 appUser.getEmail()
         );
     }
